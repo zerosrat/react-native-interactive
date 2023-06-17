@@ -1,12 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  RefreshControl,
-  Animated,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, View, RefreshControl} from 'react-native';
 
 import {ViewPager} from './view-pager';
 import {Swiper} from './swiper';
@@ -25,11 +18,11 @@ export const VerticalList = () => {
   const renderItem = ({index}: {index: number}) => {
     if (index === 0) {
       return (
-        <Animated.View style={styles.top}>
+        <View style={styles.top}>
           <Text>top</Text>
           {/* <AnimateBox /> */}
           <Swiper />
-        </Animated.View>
+        </View>
       );
     }
     if (index === 1) {
