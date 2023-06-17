@@ -43,6 +43,8 @@ target 'ReactNativeInteractive' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'LookinServer', :configurations => ['Debug']
+
   target 'ReactNativeInteractiveTests' do
     inherit! :complete
     # Pods for testing
