@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-const DATA = Array(100)
+const DATA = Array(10)
   .fill('')
   .map((_, index) => ({
     id: index + '',

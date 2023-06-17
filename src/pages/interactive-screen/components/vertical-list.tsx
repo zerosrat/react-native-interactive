@@ -1,22 +1,16 @@
 import React, {useState, useCallback} from 'react';
-import {FlatList, StyleSheet, Text, View, RefreshControl} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  RefreshControl,
+  Animated,
+} from 'react-native';
 
 import {ViewPager} from './view-pager';
-
-// const DATA = [
-//   {
-//     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-//     title: 'First Item',
-//   },
-//   {
-//     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-//     title: 'Second Item',
-//   },
-//   {
-//     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-//     title: 'Third Item',
-//   },
-// ];
+import {Swiper} from './swiper';
+// import AnimateBox from './abox';
 
 export const VerticalList = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -31,9 +25,11 @@ export const VerticalList = () => {
   const renderItem = ({index}: {index: number}) => {
     if (index === 0) {
       return (
-        <View style={styles.top}>
+        <Animated.View style={styles.top}>
           <Text>top</Text>
-        </View>
+          {/* <AnimateBox /> */}
+          <Swiper />
+        </Animated.View>
       );
     }
     if (index === 1) {
@@ -66,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   top: {
-    height: 200,
+    // height: 400,
     backgroundColor: 'orange',
   },
   tabs: {
