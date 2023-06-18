@@ -28,6 +28,7 @@ export const Swiper = () => {
         horizontal
         pagingEnabled
         onScroll={scrollHandler}
+        scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         bounces={false}
         style-={{flex: 1}}>
