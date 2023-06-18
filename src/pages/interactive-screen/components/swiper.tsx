@@ -1,18 +1,16 @@
 import React from 'react';
-import {Dimensions, Text, View} from 'react-native';
+import {Dimensions, Text, View, StyleSheet} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
-const winWidth = Dimensions.get('window').width;
-
 export const Swiper = () => {
   const scrollOffset = useSharedValue(0);
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      height: (scrollOffset.value / winWidth) * 200 + 200,
+      height: (scrollOffset.value / winWidth) * 100 + 100,
     };
   });
 
@@ -31,14 +29,32 @@ export const Swiper = () => {
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         bounces={false}
-        style-={{flex: 1}}>
-        <View style={{width: winWidth, height: 200, backgroundColor: 'blue'}}>
-          <Text>1</Text>
+        style-={styles.scrollView}>
+        <View style={styles.slide1}>
+          <Text>slide 1</Text>
         </View>
-        <View style={{width: winWidth, height: 400, backgroundColor: 'yellow'}}>
-          <Text>2</Text>
+        <View style={styles.slide2}>
+          <Text>slide 2</Text>
         </View>
       </Animated.ScrollView>
     </Animated.View>
   );
 };
+
+const winWidth = Dimensions.get('window').width;
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
+  slide1: {
+    width: winWidth,
+    height: 100,
+    backgroundColor: 'lightskyblue',
+  },
+  slide2: {
+    width: winWidth,
+    height: 200,
+    backgroundColor: 'lightyellow',
+  },
+});

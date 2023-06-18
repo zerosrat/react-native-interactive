@@ -19,7 +19,10 @@ export const VerticalList = () => {
     if (index === 0) {
       return (
         <View style={styles.top}>
-          <Text>top</Text>
+          <View style={styles.topContent}>
+            <Text>top</Text>
+          </View>
+
           {/* <AnimateBox /> */}
           <Swiper />
         </View>
@@ -57,6 +60,9 @@ const styles = StyleSheet.create({
   top: {
     // height: 400,
     backgroundColor: 'orange',
+  },
+  topContent: {
+    height: 100,
   },
   tabs: {
     height: 50,

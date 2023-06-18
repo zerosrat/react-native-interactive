@@ -29,14 +29,18 @@ export const ViewPager = () => {
         renderItem={({item}) => <Item title={item.title} />}
         keyExtractor={item => item.id}
         style={styles.list}
-        stickyHeaderIndices={[10]}
       />
       <FlatList
         data={DATA}
         renderItem={({item}) => <Item title={item.title} />}
         keyExtractor={item => item.id}
         style={styles.list}
-        stickyHeaderIndices={[10]}
+      />
+      <FlatList
+        data={DATA}
+        renderItem={({item}) => <Item title={item.title} />}
+        keyExtractor={item => item.id}
+        style={styles.list}
       />
     </ScrollView>
   );
