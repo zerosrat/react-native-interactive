@@ -7,7 +7,7 @@ Features:
 
 TODO:
 
-- [] multi tabs with animation (ref: <https://reactnative.dev/docs/animations#scrollview-with-animated-event-example>)
-- [] android pull to refresh (like iOS)
-- [] statusbar transition on scroll
-- [] safearea beautify
+- [ ] multi tabs with animation (ref: <https://reactnative.dev/docs/animations#scrollview-with-animated-event-example>)
+- [ ] android pull to refresh (like iOS)
+- [ ] statusbar transition on scroll
+- [ ] safearea beautify
