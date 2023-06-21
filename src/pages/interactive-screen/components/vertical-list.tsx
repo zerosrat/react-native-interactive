@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, Text, View, RefreshControl} from 'react-native';
 
 import {ViewPager} from './view-pager';
 import {Swiper} from './swiper';
+// import {Swiper as SwiperOld} from './swiper.old';
 // import AnimateBox from './abox';
 
 export const VerticalList = () => {
@@ -25,6 +26,7 @@ export const VerticalList = () => {
 
           {/* <AnimateBox /> */}
           <Swiper />
+          {/* <SwiperOld /> */}
         </View>
       );
     }
