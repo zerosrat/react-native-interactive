@@ -29,7 +29,7 @@ export const Swiper = () => {
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         bounces={false}
-        style-={styles.scrollView}>
+        style={styles.scrollView}>
         <View style={styles.slide1}>
           <Text>slide 1</Text>
         </View>
