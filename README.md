@@ -11,3 +11,5 @@ TODO:
 - [ ] android pull to refresh (like iOS)
 - [ ] statusbar transition on scroll
 - [ ] safearea beautify
+
+- [ ] new screen: actionsheet
