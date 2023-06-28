@@ -1,14 +1,15 @@
 import React, {useState, useCallback} from 'react';
 import {FlatList, StyleSheet, Text, View, RefreshControl} from 'react-native';
 
-import {ViewPager} from './view-pager';
 import {Swiper} from './swiper';
+import {useTabsContent} from '../hooks';
 // import {Swiper as SwiperOld} from './swiper.old';
 // import {Trans} from './trans';
 // import AnimateBox from './abox';
 
 export const VerticalList = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const {bar, content} = useTabsContent();
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -33,14 +34,10 @@ export const VerticalList = () => {
       );
     }
     if (index === 1) {
-      return (
-        <View style={styles.tabs}>
-          <Text>tabs</Text>
-        </View>
-      );
+      return bar;
     }
 
-    return <ViewPager />;
+    return content;
   };
 
   return (

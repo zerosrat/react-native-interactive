@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  ScrollView,
+  Animated,
   FlatList,
   StyleSheet,
   Text,
   View,
   Dimensions,
+  ScrollViewProps,
 } from 'react-native';
 
 const DATA = Array(10)
@@ -21,9 +22,14 @@ const Item = ({title}: {title: string}) => (
   </View>
 );
 
-export const ViewPager = () => {
+export const ViewPager = (props: {onScroll?: ScrollViewProps['onScroll']}) => {
+  const {onScroll} = props;
   return (
-    <ScrollView horizontal pagingEnabled>
+    <Animated.ScrollView
+      horizontal
+      pagingEnabled
+      onScroll={onScroll}
+      scrollEventThrottle={1}>
       <FlatList
         data={DATA}
         renderItem={({item}) => <Item title={item.title} />}
@@ -42,7 +48,7 @@ export const ViewPager = () => {
         keyExtractor={item => item.id}
         style={styles.list}
       />
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };
 
