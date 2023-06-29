@@ -5,11 +5,13 @@ import {
   Text,
   StyleSheet,
   useWindowDimensions,
-  StatusBar,
 } from 'react-native';
 import {ViewPager} from '../components/view-pager';
 
-export const useTabsContent = () => {
+export const useTabsContent = (props: {
+  barTransY: Animated.AnimatedInterpolation<string | number>;
+}) => {
+  const {barTransY} = props;
   const winDim = useWindowDimensions();
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollHandler = Animated.event(
@@ -31,7 +33,8 @@ export const useTabsContent = () => {
 
   const bar = useMemo(
     () => (
-      <View style={styles.tabs}>
+      <Animated.View
+        style={[styles.tabs, {transform: [{translateY: barTransY}]}]}>
         <View style={styles.tabContainer}>
           <Text>tab1</Text>
         </View>
@@ -53,9 +56,9 @@ export const useTabsContent = () => {
             },
           ]}
         />
-      </View>
+      </Animated.View>
     ),
-    [translateX],
+    [barTransY, translateX],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,17 +67,11 @@ export const useTabsContent = () => {
   return {bar, content};
 };
 
-const statusBarHeight = StatusBar.currentHeight || 0;
-const navbarHeight = statusBarHeight + 44;
-
 const styles = StyleSheet.create({
   tabs: {
-    // marginTop: -navbarHeight,
     flexDirection: 'row',
-    // paddingTop: navbarHeight,
     height: 50,
     backgroundColor: 'pink',
-    transform: [{translateY: navbarHeight}],
   },
   tabContainer: {
     alignItems: 'center',

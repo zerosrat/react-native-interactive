@@ -8,18 +8,45 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
+import {useDerivedValue, useSharedValue} from 'react-native-reanimated';
 
 import {Swiper} from './swiper';
 import {useTabsContent} from '../hooks';
-import {Swiper as SwiperOld} from './swiper.old';
+// import {Swiper as SwiperOld} from './swiper.old';
 // import {Trans} from './trans';
 // import AnimateBox from './abox';
 
 export const VerticalList = () => {
   const [refreshing, setRefreshing] = useState(false);
-  const {bar, content} = useTabsContent();
+  const swiperScrollOffset = useSharedValue(0);
+  const topHeight = useDerivedValue(
+    () => (swiperScrollOffset.value / winWidth) * 100 + 100 + 100,
+  );
 
   const scrollY = useRef(new Animated.Value(0)).current;
+  const opacity = scrollY.interpolate({
+    inputRange: [0, topHeight.value - navbarHeight],
+    outputRange: [0, 1],
+  });
+  const barTransY = scrollY.interpolate({
+    inputRange: [
+      0,
+      topHeight.value - navbarHeight,
+      topHeight.value,
+      topHeight.value + 1,
+    ],
+    outputRange: [0, 0, navbarHeight, navbarHeight],
+  });
+
+  const {bar, content} = useTabsContent({barTransY});
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
   const scrollHandler = Animated.event(
     [
       {
@@ -32,17 +59,6 @@ export const VerticalList = () => {
     ],
     {useNativeDriver: true},
   );
-  const opacity = scrollY.interpolate({
-    inputRange: [0, 200 - navbarHeight],
-    outputRange: [0, 1],
-  });
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 1000);
-  }, []);
 
   const renderItem = ({index}: {index: number}) => {
     if (index === 0) {
@@ -53,8 +69,8 @@ export const VerticalList = () => {
           </View>
 
           {/* <AnimateBox /> */}
-          <Swiper />
-          <SwiperOld />
+          <Swiper scrollOffset={swiperScrollOffset} />
+          {/* <SwiperOld /> */}
           {/* <Trans /> */}
         </View>
       );

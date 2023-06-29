@@ -1,16 +1,20 @@
 import React from 'react';
 import {Dimensions, Text, View, StyleSheet} from 'react-native';
 import Animated, {
-  useSharedValue,
+  SharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
+  useDerivedValue,
 } from 'react-native-reanimated';
 
-export const Swiper = () => {
-  const scrollOffset = useSharedValue(0);
+export const Swiper = (props: {scrollOffset: SharedValue<number>}) => {
+  const {scrollOffset} = props;
+  const height = useDerivedValue(() => {
+    return (scrollOffset.value / winWidth) * 100 + 100;
+  });
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      height: (scrollOffset.value / winWidth) * 100 + 100,
+      height: height.value,
     };
   });
 
