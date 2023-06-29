@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   useWindowDimensions,
+  StatusBar,
 } from 'react-native';
 import {ViewPager} from '../components/view-pager';
 
@@ -63,11 +64,17 @@ export const useTabsContent = () => {
   return {bar, content};
 };
 
+const statusBarHeight = StatusBar.currentHeight || 0;
+const navbarHeight = statusBarHeight + 44;
+
 const styles = StyleSheet.create({
   tabs: {
+    // marginTop: -navbarHeight,
     flexDirection: 'row',
+    // paddingTop: navbarHeight,
     height: 50,
     backgroundColor: 'pink',
+    transform: [{translateY: navbarHeight}],
   },
   tabContainer: {
     alignItems: 'center',

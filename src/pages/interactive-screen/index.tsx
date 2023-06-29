@@ -14,8 +14,11 @@ export const InteratveScreen = () => {
     <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+        translucent
+        backgroundColor="transparent"
       />
+      {/* <StatusBar translucent backgroundColor="transparent" /> */}
+
       <VerticalList />
     </SafeAreaView>
   );
