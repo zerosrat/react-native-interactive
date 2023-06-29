@@ -8,10 +8,11 @@ import {
 } from 'react-native';
 import {ViewPager} from '../components/view-pager';
 
-export const useTabsContent = (props: {
-  barTransY: Animated.AnimatedInterpolation<string | number>;
+export const useTabsContent = (props?: {
+  barTransY?: Animated.AnimatedInterpolation<string | number>;
 }) => {
-  const {barTransY} = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {barTransY} = props || {};
   const winDim = useWindowDimensions();
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollHandler = Animated.event(
@@ -34,7 +35,12 @@ export const useTabsContent = (props: {
   const bar = useMemo(
     () => (
       <Animated.View
-        style={[styles.tabs, {transform: [{translateY: barTransY}]}]}>
+        style={[
+          styles.tabs,
+          {
+            // transform: [{translateY: barTransY}],
+          },
+        ]}>
         <View style={styles.tabContainer}>
           <Text>tab1</Text>
         </View>
@@ -58,7 +64,7 @@ export const useTabsContent = (props: {
         />
       </Animated.View>
     ),
-    [barTransY, translateX],
+    [translateX],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,9 +6,14 @@ import {
   RefreshControl,
   StatusBar,
   Dimensions,
-  Animated,
 } from 'react-native';
-import {useDerivedValue, useSharedValue} from 'react-native-reanimated';
+import Animated, {
+  useDerivedValue,
+  useSharedValue,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  interpolate,
+} from 'react-native-reanimated';
 
 import {Swiper} from './swiper';
 import {useTabsContent} from '../hooks';
@@ -22,23 +27,21 @@ export const VerticalList = () => {
   const topHeight = useDerivedValue(
     () => (swiperScrollOffset.value / winWidth) * 100 + 100 + 100,
   );
+  const listScrollY = useSharedValue(0);
 
-  const scrollY = useRef(new Animated.Value(0)).current;
-  const opacity = scrollY.interpolate({
-    inputRange: [0, topHeight.value - navbarHeight],
-    outputRange: [0, 1],
-  });
-  const barTransY = scrollY.interpolate({
-    inputRange: [
-      0,
-      topHeight.value - navbarHeight,
-      topHeight.value,
-      topHeight.value + 1,
-    ],
-    outputRange: [0, 0, navbarHeight, navbarHeight],
+  const navbarAniStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      listScrollY.value,
+      [0, topHeight.value - navbarHeight],
+      [0, 1],
+    );
+
+    return {
+      opacity,
+    };
   });
 
-  const {bar, content} = useTabsContent({barTransY});
+  const {bar, content} = useTabsContent();
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -47,18 +50,11 @@ export const VerticalList = () => {
     }, 1000);
   }, []);
 
-  const scrollHandler = Animated.event(
-    [
-      {
-        nativeEvent: {
-          contentOffset: {
-            y: scrollY,
-          },
-        },
-      },
-    ],
-    {useNativeDriver: true},
-  );
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: event => {
+      listScrollY.value = event.contentOffset.y;
+    },
+  });
 
   const renderItem = ({index}: {index: number}) => {
     if (index === 0) {
@@ -85,7 +81,7 @@ export const VerticalList = () => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.navbar, {opacity}]}>
+      <Animated.View style={[styles.navbar, navbarAniStyle]}>
         <Text style={{backgroundColor: 'red'}}>back</Text>
       </Animated.View>
       <Animated.FlatList
@@ -95,7 +91,7 @@ export const VerticalList = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        stickyHeaderIndices={[1]}
+        // stickyHeaderIndices={[1]}
         style={styles.list}
         onScroll={scrollHandler}
       />
