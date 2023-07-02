@@ -37,14 +37,8 @@ const SpaceAreaSpace = () => {
 
 export const ViewPager = (props: {onScroll?: ScrollViewProps['onScroll']}) => {
   const {onScroll} = props;
-  const renderItem: ListRenderItem<{id: string; title: string}> = ({
-    item,
-    index,
-  }) => (
-    <>
-      <Item title={item.title} />
-      {index === DATA.length - 1 && <SpaceAreaSpace />}
-    </>
+  const renderItem: ListRenderItem<{id: string; title: string}> = ({item}) => (
+    <Item title={item.title} />
   );
 
   return (
@@ -58,18 +52,21 @@ export const ViewPager = (props: {onScroll?: ScrollViewProps['onScroll']}) => {
       <FlatList
         data={DATA}
         renderItem={renderItem}
+        ListFooterComponent={<SpaceAreaSpace />}
         keyExtractor={item => item.id}
         style={styles.list}
       />
       <FlatList
         data={DATA}
         renderItem={renderItem}
+        ListFooterComponent={<SpaceAreaSpace />}
         keyExtractor={item => item.id}
         style={styles.list}
       />
       <FlatList
         data={DATA}
         renderItem={renderItem}
+        ListFooterComponent={<SpaceAreaSpace />}
         keyExtractor={item => item.id}
         style={styles.list}
       />

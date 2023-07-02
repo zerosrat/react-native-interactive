@@ -10,10 +10,9 @@ Features:
 
 TODO:
 
-- [ ] nested scrollview
-- [ ] android pull to refresh (like iOS)
-- [ ] safearea beautify
-- [ ] tab bar sticky
+- [ ] P0: nested scrollview
+- [ ] P0: tab bar sticky
+- [ ] P1: android pull to refresh (like iOS)
 
 - [ ] new screen: actionsheet
 
