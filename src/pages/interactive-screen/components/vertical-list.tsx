@@ -1,12 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  RefreshControl,
-  StatusBar,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, Text, View, RefreshControl, Dimensions} from 'react-native';
 import Animated, {
   useDerivedValue,
   useSharedValue,
@@ -14,6 +7,7 @@ import Animated, {
   useAnimatedStyle,
   interpolate,
 } from 'react-native-reanimated';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Swiper} from './swiper';
 import {useTabsContent} from '../hooks';
@@ -22,13 +16,17 @@ import {useTabsContent} from '../hooks';
 // import AnimateBox from './abox';
 
 export const VerticalList = () => {
+  const insets = useSafeAreaInsets();
+  const statusBarHeight = insets.top;
+  const navbarHeight = statusBarHeight + navbarContentHeight;
+
   const [refreshing, setRefreshing] = useState(false);
+
   const swiperScrollOffset = useSharedValue(0);
   const topHeight = useDerivedValue(
-    () => (swiperScrollOffset.value / winWidth) * 100 + 100 + 100,
+    () => (swiperScrollOffset.value / winWidth) * 100 + 200,
   );
   const listScrollY = useSharedValue(0);
-
   const navbarAniStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       listScrollY.value,
@@ -39,7 +37,7 @@ export const VerticalList = () => {
     return {
       opacity,
     };
-  });
+  }, [navbarHeight]);
 
   const {bar, content} = useTabsContent();
 
@@ -59,8 +57,8 @@ export const VerticalList = () => {
   const renderItem = ({index}: {index: number}) => {
     if (index === 0) {
       return (
-        <View style={styles.top}>
-          <View style={styles.topContent}>
+        <View style={[styles.top]}>
+          <View style={[styles.topContent, {paddingTop: statusBarHeight}]}>
             <Text>top</Text>
           </View>
 
@@ -81,7 +79,12 @@ export const VerticalList = () => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.navbar, navbarAniStyle]}>
+      <Animated.View
+        style={[
+          styles.navbar,
+          {paddingTop: statusBarHeight, height: navbarHeight},
+          navbarAniStyle,
+        ]}>
         <Text style={{backgroundColor: 'red'}}>back</Text>
       </Animated.View>
       <Animated.FlatList
@@ -100,8 +103,7 @@ export const VerticalList = () => {
 };
 
 const winWidth = Dimensions.get('window').width;
-const statusBarHeight = StatusBar.currentHeight || 0;
-const navbarHeight = statusBarHeight + 44;
+const navbarContentHeight = 44;
 
 const styles = StyleSheet.create({
   container: {
@@ -114,8 +116,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: winWidth,
-    height: navbarHeight,
-    padding: statusBarHeight,
     backgroundColor: '#fff',
     zIndex: 99,
   },
@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
   },
   topContent: {
-    paddingTop: statusBarHeight,
     height: 100,
   },
   tabs: {

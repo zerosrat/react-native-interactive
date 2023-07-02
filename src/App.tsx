@@ -6,10 +6,15 @@
  */
 
 import React from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {InteratveScreen} from './pages/interactive-screen';
 
 function App(): JSX.Element {
-  return <InteratveScreen />;
+  return (
+    <SafeAreaProvider>
+      <InteratveScreen />
+    </SafeAreaProvider>
+  );
 }
 
 export default App;

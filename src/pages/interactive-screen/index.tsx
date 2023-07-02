@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
+import {View, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {VerticalList} from './components/vertical-list';
 
@@ -11,7 +11,7 @@ export const InteratveScreen = () => {
   };
 
   return (
-    <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
+    <View style={[backgroundStyle, {flex: 1}]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         translucent
@@ -20,6 +20,6 @@ export const InteratveScreen = () => {
       {/* <StatusBar translucent backgroundColor="transparent" /> */}
 
       <VerticalList />
-    </SafeAreaView>
+    </View>
   );
 };
