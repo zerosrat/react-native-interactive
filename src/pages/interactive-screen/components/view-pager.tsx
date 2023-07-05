@@ -76,7 +76,7 @@ export const ViewPager = (props: {onScroll?: ScrollViewProps['onScroll']}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   item: {
     backgroundColor: '#f9c2ff',
